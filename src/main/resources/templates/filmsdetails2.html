@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Film Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/films" class="text-decoration-none">Films</a></li>
+            <li class="breadcrumb-item active" th:text="${film.title}">Film Details</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white border-bottom border-2">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-0" th:text="${film.title}">Film Details</h1>
+                <a href="/films" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to List
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100 bg-light border-0">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4 text-primary">
+                                <i class="bi bi-info-circle me-2"></i>Basic Information
+                            </h5>
+                            <div class="mb-3">
+                                <label class="fw-bold mb-1">Description</label>
+                                <p class="text-muted mb-0" th:text="${film.description}"></p>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <label class="fw-bold mb-1">Release Year</label>
+                                    <p class="text-muted mb-0" th:text="${film.releaseYear}"></p>
+                                </div>
+                                <div class="col-6">
+                                    <label class="fw-bold mb-1">Rating</label>
+                                    <p class="mb-0">
+                                        <span class="badge bg-primary" th:text="${film.rating}"></span>
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <label class="fw-bold mb-1">Language</label>
+                                    <p class="text-muted mb-0" th:text="${film.language != null ? film.language.name : 'Not specified'}"></p>
+                                </div>
+                                <div class="col-6">
+                                    <label class="fw-bold mb-1">Original Language</label>
+                                    <p class="text-muted mb-0" th:text="${film.originalLanguage != null ? film.originalLanguage.name : 'Not specified'}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100 bg-light border-0">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4 text-primary">
+                                <i class="bi bi-currency-dollar me-2"></i>Rental Information
+                            </h5>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <label class="fw-bold mb-1">Rental Duration</label>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-clock me-1"></i>
+                                        <span th:text="${film.rentalDuration}"></span> days
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <label class="fw-bold mb-1">Rental Rate</label>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-tag me-1"></i>
+                                        $<span th:text="${film.rentalRate}"></span>
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <label class="fw-bold mb-1">Length</label>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-stopwatch me-1"></i>
+                                        <span th:text="${film.length}"></span> min
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <label class="fw-bold mb-1">Replacement Cost</label>
+                                    <p class="text-muted mb-0">
+                                        <i class="bi bi-cash me-1"></i>
+                                        $<span th:text="${film.replacementCost}"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-people me-2"></i>Cast
+                            </h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" th:each="actor : ${film.actors}">
+                                <i class="bi bi-person me-2"></i>
+                                <span th:text="${actor.firstName + ' ' + actor.lastName}"></span>
+                            </li>
+                            <li class="list-group-item text-muted" th:if="${film.actors == null || film.actors.empty}">
+                                <i class="bi bi-info-circle me-2"></i>No actors listed
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-tags me-2"></i>Categories
+                            </h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" th:each="category : ${film.filmCategories}">
+                                <i class="bi bi-tag me-2"></i>
+                                <span th:text="${category.name}"></span>
+                            </li>
+                            <li class="list-group-item text-muted" th:if="${film.filmCategories == null || film.filmCategories.empty}">
+                                <i class="bi bi-info-circle me-2"></i>No categories listed
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h5 class="mb-3">
+                    <i class="bi bi-star me-2"></i>Special Features
+                </h5>
+                <p class="mb-0 text-muted" th:text="${film.specialFeatures != null ? film.specialFeatures : 'None'}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

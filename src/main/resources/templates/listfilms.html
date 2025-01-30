@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Films List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1">Films Collection</h1>
+            <p class="text-muted mb-0">Browse our selection of available films</p>
+        </div>
+        <div>
+            <a th:href="@{/login}" class="btn btn-outline-primary">
+                <i class="bi bi-shield-lock me-1"></i>
+                Admin Login
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                    <tr>
+                        <th class="px-4">Title</th>
+                        <th class="px-4">Description</th>
+                        <th class="px-4">Year</th>
+                        <th class="px-4">Language</th>
+                        <th class="px-4">Length</th>
+                        <th class="px-4 text-end">Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="film : ${films}">
+                        <td class="px-4">
+                            <div class="fw-medium" th:text="${film.title}"></div>
+                        </td>
+                        <td class="px-4">
+                            <div class="text-muted text-truncate" style="max-width: 300px;" th:text="${film.description}"></div>
+                        </td>
+                        <td class="px-4">
+                            <span class="badge bg-secondary" th:text="${film.releaseYear}"></span>
+                        </td>
+                        <td class="px-4">
+                            <span class="badge bg-primary" th:text="${film.language.name}"></span>
+                        </td>
+                        <td class="px-4">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-clock me-1"></i>
+                                <span th:text="${film.length}"></span> min
+                            </div>
+                        </td>
+                        <td class="px-4 text-end">
+                            <a th:href="@{/films/user/details/{id}(id=${film.filmId})}"
+                               class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center text-muted mt-4">
+        <small>
+            <i class="bi bi-info-circle me-1"></i>
+            Click on Details to view more information about each film
+        </small>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
